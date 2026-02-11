@@ -1,0 +1,194 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Abhivarshini🤍</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            font-family: Arial;
+            overflow: hidden;
+            transition: filter 2s ease;
+
+        .blur-bg {
+            filter: blur(8px);
+        }
+
+
+        }
+
+        h1 {
+            margin-top: 80px;
+            font-size: 40px;
+        }
+
+        h2 {
+            display: none;
+            font-size: 35px;
+            margin-top: 40px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 500px;   /* Same height fixed */
+        }
+
+
+        .image-container img {
+            width: 600px !important;
+            height: 400px !important;
+            object-fit: cover;   /* All images same crop */
+            border-radius: 20px;
+            display: none;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1.5s ease-in-out;
+        .zoom {
+            transform: scale(1);
+}
+
+        }
+
+
+
+        button {
+            padding: 12px 25px;
+            font-size: 20px;
+            margin: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: gray;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        /* Heart animation */
+        .heart {
+            position: fixed;
+            color: red;
+            font-size: 20px;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            from { transform: translateY(100vh); }
+            to { transform: translateY(-10vh); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="mainHeading">Nee ena ha love Panri ya di ErumaMaadu😅? </h1>
+
+    <div id="buttons">
+        <button id="yesBtn" onclick="startLove()">Amaa vaa🤍</button>
+        <button id="noBtn" onclick="moveNo()">Ilaa yaa😜</button>
+    </div>
+
+    <h2 id="loveMsg">Apo Happy Kiss Day Yaanna🐘Vaa Nama kiss Pana la ha💋😅</h2>
+
+    <div class="image-container">
+        <img id="loveImage" src="{{ url_for('static', filename='sticker1.jpg') }}">
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="{{ url_for('static', filename='music.mp3') }}" type="audio/mp3">
+    </audio>
+
+<script>
+
+let images = [
+    "{{ url_for('static', filename='sticker1.jpg') }}",
+    "{{ url_for('static', filename='sticker2.jpg') }}",
+    "{{ url_for('static', filename='sticker3.jpg') }}"
+];
+
+let index = 0;
+
+function startLove() { 
+    document.body.classList.add("blur-bg");
+
+
+    document.getElementById("mainHeading").style.display = "none";
+    document.getElementById("buttons").style.display = "none";
+
+    let msg = document.getElementById("loveMsg");
+    let img = document.getElementById("loveImage");
+
+    msg.style.display = "block";
+    img.style.display = "block";
+
+    // Play Music
+    document.getElementById("bgMusic").play();
+
+    img.style.opacity = 1;
+
+    setInterval(() => {
+
+    img.style.opacity = 0;
+    img.classList.remove("zoom");
+
+    setTimeout(() => {
+
+        index = (index + 1) % images.length;
+        img.src = images[index];
+
+        img.style.opacity = 1;
+        img.classList.add("zoom");
+
+    }, 800);
+
+}, 3000);
+
+}
+
+function moveNo() {
+    let btn = document.getElementById("noBtn");
+
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+
+    btn.style.position = "absolute";
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+}
+
+// Floating Hearts
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+
+}, 400);
+
+</script>
+
+</body>
+</html>
